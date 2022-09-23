@@ -2,100 +2,72 @@ import mongoose from 'mongoose'
 // import  bcrypt from "bcryptjs"
 // import jwt from "jsonwebtoken"
 
-const Schema = new mongoose.Schema({
-    phonenumber:{
-        type: Number,
-        required:true
+const Schema = new mongoose.Schema(
+  {
+    phonenumber: {
+      type: Number,
+      required: true,
     },
 
-    name:{
-        type: String,
-        required:true
+    name: {
+      type: String,
+      required: true,
     },
-    email:{
-        type: String,
-        required:true
+    email: {
+      type: String,
+      required: true,
     },
-   
 
-    pimage:{type:String},
+    pimage: { type: String },
     role: {
-        type: String,
-         enum: ["staff", "admin","seller"],
-        // default: "user",
+      type: String,
+      enum: ['staff', 'admin', 'seller'],
+      // default: "user",
+    },
+
+    miscellaneous: [
+      {
+        //name,aadhar,enter bill number,select product,quantity,cash,credit,totalAmount
+        personName: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        mobile: { type: Number, required: true },
+
+        invoiceDetails: {
+          type: String,
+          enum: ['In', 'Out'],
+          // default: "user",
+        },
+
+        billNumber: {
+          type: String,
+          unique: true,
+          required: true,
+        },
+
+        totalAmount: {
+          type: Number,
+          required: true,
+        },
+        enterDescription: { type: String, required: true },
+        addAttachment: { type: String },
+
+        createdAt: { type: Date, default: Date.now },
       },
+    ],
 
-      costumersInvoice:[
-
-       
-        {
-            //name,aadhar,enter bill number,select product,quantity,cash,credit,totalAmount
-            name: {
-              type: String,
-              required: true,
-              trim: true,
-            },
-            aadharNumber: {
-              type: Number,
-              required: true,
-              unique: true,
-            },
-            selectProduct: {
-              type: Object,
-            },
-            quantity: { type: Number, required: true },
-            billNumber: {
-              type: String,
-              unique: true,
-              required: true,
-            },
-            totalAmount: {
-              type: Number,
-              required: true,
-            },
-            cash: {
-              type: Number,
-              required: true,
-            },
-            credit: {
-              type: Number,
-        
-              required: true,
-            },
-            createdAt:{
-                type: Number,
-          
-                required: true,
-              },
-              updatedAt: {
-                type: Number,
-          
-                required: true,
-              },
-              
-createdAt : { type : Date, default: Date.now }
-          },
-          {
-            timestamps: true,
-           
-          },
-          
-
-      ]
     // pimage:{type:String,required:true},
     // role: {
     //     type: String,
     //      enum: ["user", "admin"],
     //     default: "user",
     //   },
-  
- 
-},
-{
-    timestamps: true,
-   
   },
-
+  {
+    timestamps: true,
+  }
 )
 
 // Schema.pre('save',async function (next){
@@ -107,15 +79,9 @@ createdAt : { type : Date, default: Date.now }
 //     next();
 // })
 
-
-
-
-
 const Registration = mongoose.model('Registration', Schema)
 
-
-export default Registration;
-
+export default Registration
 
 // import mongoose from "mongoose"
 
@@ -126,14 +92,9 @@ export default Registration;
 //     cpassword:{type:String,required:true},
 //     mobile:{type:String,required:true},
 //     work:{type:String},
-    
-  
-  
 
 // })
 
-
 // const Registration = mongoose.model('Registration',Schema);
-
 
 //  export default Registration;
