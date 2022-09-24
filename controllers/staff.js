@@ -43,6 +43,8 @@ class staffController {
     }
   }
 
+  
+
   static costumersInvoice = async (req, res) => {
     let id = '632c826dc67cb89e82e9ce05'
     // const Invoice = new  Invoice({...req.body,createdby:id})
@@ -51,7 +53,7 @@ class staffController {
       const {
         name,
         aadharNumber,
-        selectProduct,
+        products,
         quantity,
         billNumber,
         totalAmount,
@@ -59,34 +61,39 @@ class staffController {
         credit,
       } = req.body
 
-      if (!totalAmount || !quantity || !name || !selectProduct) {
+      if (!totalAmount  || !name || !billNumber) {
         res.send({ status: 'failed', message: 'All Fields are Required' })
       }
 
       // const userLogin = await registration.findOne({_id:id})
       // if (userLogin )
       //  {
-      const userProduct = await Product.findOneAndUpdate(
-        { name: selectProduct },
-        { $set: { quantity: quantity } }
-      )
-      console.log(userProduct.quantity - quantity, '80')
+        for (let index = 0; index < products.length; index++) {
+          const element1 = products[index].selectProduct;
+          const element2 = products[index].quantity;
+          console.log(element1)
+          console.log(element2)
 
-      let newQuantity = userProduct.quantity - quantity
-      const userNewProduct = await Product.findOneAndUpdate(
-        { name: selectProduct },
-        { $set: { quantity: newQuantity } }
-      )
+          
+        
+          const userProduct = await Product.findOne({name:element1})
+          console.log(userProduct.quantity - element2,"80")
+
+       let newQuantity = userProduct.quantity>0? userProduct.quantity - element2:0 
+          const userNewProduct = await Product.findOneAndUpdate({name:element1},{ $set: {quantity:newQuantity}})
+          console.log(userNewProduct)
+        }
       console.log(userNewProduct)
 
       const lol = {
-        supplierName,
-
-        selectProduct,
-        quantity,
+        name,
+        aadharNumber,
+        products,
         billNumber,
         totalAmount,
         addAttachment,
+        cash,
+        credit,
         createdby: id,
       }
       const invoice = new Invoice(lol)
@@ -99,6 +106,10 @@ class staffController {
       return res.status(422).json({ error: 'not found data' })
     }
   }
+
+
+
+
   static storeInvoice = async (req, res) => {
     let id = '632c826dc67cb89e82e9ce05'
     // const Invoice = new  Invoice({...req.body,createdby:id})

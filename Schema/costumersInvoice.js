@@ -13,10 +13,11 @@ const InvoiceSchema = new mongoose.Schema({
               required: true,
               unique: true,
             },
-            selectProduct: {
-              type: Object,
-            },
-            quantity: { type: Number, required: true },
+            products :[
+              {
+               selectProduct: { type: String},
+               quantity: { type: Number, required: true },
+             }],
             billNumber: {
               type: String,
               unique: true,
@@ -35,7 +36,11 @@ const InvoiceSchema = new mongoose.Schema({
         
               required: true,
             },
-           
+            createdby: {
+              type:String,
+        
+              required: true,
+            },
 
           },
           {
