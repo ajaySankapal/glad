@@ -6,7 +6,7 @@ import connectDB from './db/connectdb.js'
 import userRoute from './routes/user.js'
 import staffRoute from './routes/staff.js'
 
-const port = process.env.PORT || '8000'
+const port = process.env.PORT || '8001'
 const DATABASE_URL =
   'mongodb+srv://root:rootpass1234@ecommerce-site-api.yesacet.mongodb.net/glads?retryWrites=true&w=majority'
 

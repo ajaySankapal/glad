@@ -54,7 +54,7 @@ class staffController {
         name,
         aadharNumber,
         products,
-        quantity,
+      
         billNumber,
         totalAmount,
         cash,
@@ -71,19 +71,20 @@ class staffController {
         for (let index = 0; index < products.length; index++) {
           const element1 = products[index].selectProduct;
           const element2 = products[index].quantity;
-          console.log(element1)
-          console.log(element2)
+          console.log(element1,"74")
+          console.log(element2,"75")
 
           
         
           const userProduct = await Product.findOne({name:element1})
+          console.log(userProduct,80)
           console.log(userProduct.quantity - element2,"80")
 
        let newQuantity = userProduct.quantity>0? userProduct.quantity - element2:0 
           const userNewProduct = await Product.findOneAndUpdate({name:element1},{ $set: {quantity:newQuantity}})
-          console.log(userNewProduct)
+          console.log(userNewProduct,"85")
         }
-      console.log(userNewProduct)
+      // console.log(userNewProduct)
 
       const lol = {
         name,
@@ -91,14 +92,14 @@ class staffController {
         products,
         billNumber,
         totalAmount,
-        addAttachment,
+        // addAttachment,
         cash,
         credit,
         createdby: id,
       }
       const invoice = new Invoice(lol)
-      await invoice.save()
-
+      await invoice.save(invoice)
+console.log(invoice)
       res.send({ status: 'success', message: 'costumersInvoice saved' })
       //  }
     } catch (error) {
