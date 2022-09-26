@@ -17,7 +17,7 @@ const Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
+    password: { type: String },
     pimage: { type: String },
     role: {
       type: String,
