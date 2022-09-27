@@ -8,8 +8,8 @@ import staffRoute from './routes/staff.js'
 
 const port = process.env.PORT || '8001'
 const DATABASE_URL =
-  'mongodb+srv://root:rootpass1234@ecommerce-site-api.yesacet.mongodb.net/glads?retryWrites=true&w=majority'
-
+  'mongodb+srv://pratham:lookman17@cluster1.vuxzs.mongodb.net/?retryWrites=true&w=majority'
+  // mongodb+srv://pratham:lookman17@cluster1.vuxzs.mongodb.net/?retryWrites=true&w=majority
 connectDB(DATABASE_URL)
 export const app = express()
 //  app.use(cookieParser())

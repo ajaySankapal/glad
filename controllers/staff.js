@@ -183,7 +183,7 @@ console.log(invoice)
       console.log(error)
       return res.status(422).json({ error: 'not found data' })
     }
-  }
+  };
 
   static addLoaction = async (req, res) => {
     const location = new Location(req.body)
@@ -195,12 +195,12 @@ console.log(invoice)
     }
     console.log(req.body)
     res.send(req.body)
-  }
+  };
 
   static getLocation = async (req, res) => {
     const locations = await Location.find({})
     res.json(locations)
-  }
+  };
 
   static login = async (req, res) => {
     const { phonenumber } = req.body
@@ -227,7 +227,7 @@ console.log(invoice)
         })
       }
     })
-  }
+  };
 
   static verifyOTP = async (req, res) => {
     const { id, otpcode } = req.body
@@ -245,4 +245,4 @@ console.log(invoice)
   }
 }
 
-export default staffController
+export default staffController;
