@@ -14,23 +14,7 @@ const messagebird = initMB('ZUcVDMrE8WjDTdP0h22BQfXdV');
 class sellerController{
 
     
-  static register = async(req, res) => {
-
-    try {
-       const {phonenumber,name,email,role} = req.body;
-     
-    const pimage = req.files['pimage'][0].filename
   
-const lol ={phonenumber,name,email,role,pimage}
-      const register = new  registration(lol)
-        await register.save()
-      res.status(201).send({message:"succesfull",})
-      }
-   catch (error) {
-    console.log(error)
-    return res.status(422).json({error:"not found data"})
-  }
-  }
 
   
  static addLoaction = async (req, res) => {

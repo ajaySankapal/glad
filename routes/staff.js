@@ -15,7 +15,7 @@ router.use(
 //post request
 router.post('/costumersInvoice', staffController.costumersInvoice)
 router.post('/storeInvoice', staffController.storeInvoice)
-router.post('/Miscellaneous', staffController.Miscellaneous)
+// router.post('/Miscellaneous', staffController.Miscellaneous)
 
 //  router.post ('/login',userController.login);
 //  router.post ('/addProduct',userController.addProduct);

@@ -8,7 +8,7 @@ import staffRoute from './routes/staff.js'
 
 const port = process.env.PORT || '8001'
 const DATABASE_URL =
-  'mongodb+srv://pratham:lookman17@cluster1.vuxzs.mongodb.net/?retryWrites=true&w=majority'
+  'mongodb+srv://glad:lookman17@glad.dkowsha.mongodb.net/?retryWrites=true&w=majority'
   // mongodb+srv://pratham:lookman17@cluster1.vuxzs.mongodb.net/?retryWrites=true&w=majority
 connectDB(DATABASE_URL)
 export const app = express()
