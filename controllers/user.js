@@ -22,12 +22,23 @@ class userController{
        const {phonenumber,name,email,role,password} = req.body;
      
     const pimage = req.files['pimage'][0].filename
-  
-const lol = {phonenumber,name,email,role,pimage,password}
-      const register = new  registration(lol)
-        await register.save()
-      res.status(201).send({message:"succesfull",})
+    const userLogin = await registration.findOne({ phonenumber: phonenumber });
+    console.log(userLogin)
+    if (userLogin) {
+      if (userLogin.phonenumber == phonenumber) {
+        console.log(userLogin)
+        res.status(201).send({message:"number already register",})
       }
+    }
+    
+else
+{const lol = {phonenumber,name,email,role,pimage,password}
+const register = new  registration(lol)
+  await register.save()
+res.status(201).send({message:"succesfull",})
+}}
+
+
    catch (error) {
     console.log(error)
     return res.status(422).json({error:"not found data"})
