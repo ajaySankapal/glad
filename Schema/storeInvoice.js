@@ -21,7 +21,11 @@ const StoreSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    quantity: { type: Number, required: true },
+    products :[
+      {
+       selectProduct: { type: String},
+       quantity: { type: Number, required: true },
+     }],
     billNumber: {
       type: String,
       unique: true,

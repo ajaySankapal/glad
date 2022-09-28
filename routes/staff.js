@@ -1,6 +1,8 @@
-import express from 'express'
-import staffController from '../controllers/staff.js'
-import upload from '../middleware/upload.js'
+import express from 'express';
+import staffController from '../controllers/staff.js';
+import upload from '../middleware/upload.js';
+import authenticate from "../middleware/authenticate.js";
+import middile from '../middleware/require.js';
 
 const router = express.Router()
 //authentication
@@ -13,8 +15,8 @@ router.use(
   upload.fields([{ name: 'addAttachment', maxcount: 1 }])
 )
 //post request
-router.post('/costumersInvoice', staffController.costumersInvoice)
-router.post('/storeInvoice', staffController.storeInvoice)
+router.post('/costumersInvoice' ,authenticate,middile.staff, staffController.costumersInvoice)
+router.post('/storeInvoice',authenticate ,middile.staff,  staffController.storeInvoice)
 // router.post('/Miscellaneous', staffController.Miscellaneous)
 
 //  router.post ('/login',userController.login);
@@ -25,6 +27,9 @@ router.post('/storeInvoice', staffController.storeInvoice)
 //  router.post('/verify', userController.verifyOTP)
 
 //get request
-// router.get ('/getLocation',userController.getLocation);
-
+ router.get ('/getPofile',authenticate, staffController.getPofile);
+ router.get ('/getProduct', staffController.getProduct);
+ router.get ('/getLocation', staffController.getLocation);
+ 
+ 
 export default router

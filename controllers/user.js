@@ -1,8 +1,10 @@
-import registration from "../Schema/Registration.js";
+// import registration from "../Schema/Registration.js";
 import initMB from 'messagebird';
 const messagebird = initMB('ZUcVDMrE8WjDTdP0h22BQfXdV');
 import Product from "../Schema/Products.js";
 import Location from "../Schema/Location.js";
+import Registration2 from "../Schema/Registration2.js";
+import Invoice from '../Schema/costumersInvoice.js'
 
 // process.env.SECRET_KEY
  import  bcrypt from "bcryptjs";
@@ -22,7 +24,7 @@ class userController{
        const {phonenumber,name,email,role,password} = req.body;
      
     const pimage = req.files['pimage'][0].filename
-    const userLogin = await registration.findOne({ phonenumber: phonenumber });
+    const userLogin = await Registration2.findOne({ phonenumber: phonenumber });
     console.log(userLogin)
     if (userLogin) {
       if (userLogin.phonenumber == phonenumber) {
@@ -33,17 +35,71 @@ class userController{
     
 else
 {const lol = {phonenumber,name,email,role,pimage,password}
-const register = new  registration(lol)
+const register = new  Registration2(lol)
   await register.save()
 res.status(201).send({message:"succesfull",})
 }}
-
-
-   catch (error) {
+catch (error) {
     console.log(error)
     return res.status(422).json({error:"not found data"})
   }
   }
+
+  
+//   static registers = async(req, res) => {
+
+//     try {
+//        const {phonenumber,name,email,role,password} = req.body;
+     
+//     const pimage = req.files['pimage'][0].filename
+//     const userLogin = await Registration2.findOne({ phonenumber: phonenumber });
+//     console.log(userLogin)
+//     if (userLogin) {
+//       if (userLogin.phonenumber == phonenumber) {
+//         console.log(userLogin)
+//         res.status(201).send({message:"number already register",})
+//       }
+//     }
+    
+// else
+// {const lol = {phonenumber,name,email,role,pimage,password}
+// const register = new  Registration2(lol)
+//   await register.save()
+// res.status(201).send({message:"succesfull",})
+// }}
+//  catch (error) {
+//     console.log(error)
+//     return res.status(422).json({error:"not found data"})
+//   }
+//   }
+
+
+static GetdailyDetails= async(req, res) => {
+
+  try {
+     
+  const ram =  await Invoice.find({
+// to get last 24 hour sells record
+    "createdAt":{$lt: new Date(), $gt:new Date(new Date().getTime()-(24*60*60*1000))}
+  })
+
+  if (ram) {
+    //  console.log(ram)
+//  console.log(new Date(new Date().getTime()-(24*60*1000)))
+//  console.log(new Date(new Date().getTime()-(24*60*60*1000)))
+ 
+  res.send(ram)
+
+  
+  }
+    
+  } 
+  catch (error) {
+    console.log(error,{message:"items not added"})
+  }
+
+}
+
 
 
   static addProduct = async (req, res) => {
@@ -54,7 +110,7 @@ res.status(201).send({message:"succesfull",})
     } catch (e) {
       res.status(400).send(e)
     }
-  }
+  };
 
  static addLoaction = async (req, res) => {
     const location = new Location(req.body)
@@ -86,7 +142,7 @@ res.status(201).send({message:"succesfull",})
         return res.status(400).json({ error: "pls filled data" })
       }
 
-      const userLogin = await registration.findOne({ phonenumber: phonenumber });
+      const userLogin = await Registration2.findOne({ phonenumber: phonenumber });
       if (userLogin) {
 
         const isMatch = await bcrypt.compare(password, userLogin.password)
