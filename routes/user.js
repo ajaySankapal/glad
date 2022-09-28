@@ -28,4 +28,4 @@ router.use( '/register',upload.fields([{name:'pimage',maxcount:1}]));
 router.get ('/GetdailyDetails',authenticate, middile.admin, userController.GetdailyDetails);
 
 
- export default router
+ export default router;
