@@ -25,7 +25,12 @@ router.use( '/register',upload.fields([{name:'pimage',maxcount:1}]));
 
 //get request
 // router.get ('/getLocation',userController.getLocation);
+
+router.get ('/costumersInvoice', userController.costumersInvoice);
 router.get ('/GetdailyDetails',authenticate, middile.admin, userController.GetdailyDetails);
 
+//patch request
+router.patch ('/editProfile',authenticate, userController.editProfile);
+router.patch('/changeUserPasswordbyId/:id',authenticate,middile.admin,userController.changeUserPasswordbyId);
 
  export default router;
