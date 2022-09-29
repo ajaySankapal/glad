@@ -3,7 +3,8 @@ import Product from '../Schema/Products.js'
 import Invoice from '../Schema/costumersInvoice.js'
 import StoreInvoice from '../Schema/storeInvoice.js'
 import Registration2 from '../Schema/Registration2.js'
-
+import Expances from "../Schema/expances.js"
+import Category from "../Schema/Category.js"
 // process.env.SECRET_KEY
 // import  bcrypt from "bcryptjs";
 
@@ -216,13 +217,26 @@ console.log(invoice)
     try {
       await location.save()
       res.status(201).send(location)
-    } catch (e) {
-      res.status(400).send(e)
+    } catch (err) {
+      res.status(400).send(err)
     }
     console.log(req.body)
     res.send(req.body)
   };
-
+  
+  static addExpances = async (req, res) => {
+    const addAttachment = req.files['addAttachment'][0].filename
+let lol = {...req.body,createdby:  req.user._id,addAttachment}
+    const expances = new Expances(lol)
+    try {
+      await expances.save()
+      res.status(201).send(expances)
+    } catch (err) {
+      res.status(400).send(err)
+    }
+    console.log(expances)
+    
+  };
 
   static getLocation = async (req, res) => {
     const locations = await Location.find({})
@@ -232,7 +246,10 @@ console.log(invoice)
     const product = await Product.find({})
     res.send(product)
   };
-
+  static getcategory = async (req, res) => {
+    const category = await Category.find({})
+    res.json(category)
+  }
   
 
   static getPofile = async (req, res) => {

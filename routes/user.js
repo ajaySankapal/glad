@@ -17,6 +17,8 @@ router.use( '/register',upload.fields([{name:'pimage',maxcount:1}]));
  router.post ('/login',userController.login);
  router.post ('/addProduct',userController.addProduct);
  router.post ('/addLoaction',userController.addLoaction);
+ router.post ('/addCategory',userController.addCategory);
+ 
 //  router.post ('/registers', userController.registers);
  
 
@@ -28,6 +30,7 @@ router.use( '/register',upload.fields([{name:'pimage',maxcount:1}]));
 
 router.get ('/costumersInvoice', userController.costumersInvoice);
 router.get ('/GetdailyDetails',authenticate, middile.admin, userController.GetdailyDetails);
+router.get ('/RecentaddedProduct',authenticate, middile.admin, userController.RecentaddedProduct);
 
 //patch request
 router.patch ('/editProfile',authenticate, userController.editProfile);

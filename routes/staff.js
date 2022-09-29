@@ -7,6 +7,11 @@ import middile from '../middleware/require.js';
 const router = express.Router()
 //authentication
 router.use(
+  '/addExpances',
+  upload.fields([{ name: 'addAttachment', maxcount: 1 }])
+)
+
+router.use(
   '/storeInvoice',
   upload.fields([{ name: 'addAttachment', maxcount: 1 }])
 )
@@ -17,6 +22,8 @@ router.use(
 //post request
 router.post('/costumersInvoice' ,authenticate,middile.staff, staffController.costumersInvoice)
 router.post('/storeInvoice',authenticate ,middile.staff,  staffController.storeInvoice)
+router.post('/addExpances',authenticate ,middile.staff,  staffController.addExpances)
+
 // router.post('/Miscellaneous', staffController.Miscellaneous)
 
 //  router.post ('/login',userController.login);
@@ -30,6 +37,7 @@ router.post('/storeInvoice',authenticate ,middile.staff,  staffController.storeI
  router.get ('/getPofile',authenticate, staffController.getPofile);
  router.get ('/getProduct', staffController.getProduct);
  router.get ('/getLocation', staffController.getLocation);
+ router.get ('/getcategory', staffController.getcategory);
  
  
 export default router

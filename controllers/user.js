@@ -6,6 +6,7 @@ import Location from "../Schema/Location.js";
 import Registration2 from "../Schema/Registration2.js";
 import Invoice from '../Schema/costumersInvoice.js'
 import mongoose from 'mongoose';
+import Category from "../Schema/Category.js"
 // import Invoice from '../Schema/costumersInvoice.js'
 
 // process.env.SECRET_KEY
@@ -76,6 +77,31 @@ catch (error) {
 //   }
 
 
+
+static RecentaddedProduct= async(req, res) => {
+
+  try {
+     
+  const ram =  await Product.find({
+
+    "createdAt":{$lt: new Date(), $gt:new Date(new Date().getTime()-(24*60*60*1000))}
+  })
+
+  if (ram) {
+    
+ 
+  res.send(ram)
+
+  
+  }
+    
+  } 
+  catch (error) {
+    console.log(error,{message:"items not added"})
+  }
+
+}
+
 static GetdailyDetails= async(req, res) => {
 
   try {
@@ -113,6 +139,17 @@ static GetdailyDetails= async(req, res) => {
       res.status(400).send(e)
     }
   };
+  static addCategory = async (req, res) => {
+    const category = new Category(req.body)
+    try {
+      await category.save()
+      res.status(201).send(category)
+    } catch (e) {
+      res.status(400).send(e)
+    }
+    console.log(req.body)
+    // res.send(req.body)
+  }
 
  static addLoaction = async (req, res) => {
     const location = new Location(req.body)
@@ -130,7 +167,10 @@ static GetdailyDetails= async(req, res) => {
     const locations = await Location.find({})
     res.json(locations)
   }
-
+  // static getcategory = async (req, res) => {
+  //   const category = await Category.find({})
+  //   res.json(category)
+  // }
   static costumersInvoice = async (req, res) => {
     const invoice = await Invoice.find({})
     res.json(invoice)
