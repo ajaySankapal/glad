@@ -137,14 +137,14 @@ static GetdailyDetails= async(req, res) => {
   }
 
   
-  static changeUserPasswordbyId = async (req, res) => {
+  static changeUserPassword = async (req, res) => {
 
     try {
       // const { password, password_confirmation,Oldpassword } = req.body
-      const { password, password_confirmation } = req.body
+      const { password, password_confirmation,id } = req.body
       // const { id } = req.params;
       //  console.log(id)
-var id = req.params.id
+// var id = req.params.id
       // let li ='633520bd0252b9afa1479feb'
     
       //  const id = mongoose.Types.ObjectId(_id);

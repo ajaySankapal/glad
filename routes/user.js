@@ -31,6 +31,6 @@ router.get ('/GetdailyDetails',authenticate, middile.admin, userController.Getda
 
 //patch request
 router.patch ('/editProfile',authenticate, userController.editProfile);
-router.patch('/changeUserPasswordbyId/:id',authenticate,middile.admin,userController.changeUserPasswordbyId);
+router.patch('/changeUserPassword',authenticate,middile.admin,userController.changeUserPassword);
 
  export default router;
