@@ -5,6 +5,8 @@ import Product from "../Schema/Products.js";
 import Location from "../Schema/Location.js";
 import Registration2 from "../Schema/Registration2.js";
 import Invoice from '../Schema/costumersInvoice.js'
+import mongoose from 'mongoose';
+// import Invoice from '../Schema/costumersInvoice.js'
 
 // process.env.SECRET_KEY
  import  bcrypt from "bcryptjs";
@@ -129,6 +131,82 @@ static GetdailyDetails= async(req, res) => {
     res.json(locations)
   }
 
+  static costumersInvoice = async (req, res) => {
+    const invoice = await Invoice.find({})
+    res.json(invoice)
+  }
+
+  
+  static changeUserPasswordbyId = async (req, res) => {
+
+    try {
+      // const { password, password_confirmation,Oldpassword } = req.body
+      const { password, password_confirmation } = req.body
+      // const { id } = req.params;
+      //  console.log(id)
+var id = req.params.id
+      // let li ='633520bd0252b9afa1479feb'
+    
+      //  const id = mongoose.Types.ObjectId(_id);
+      //  console.log(id)
+      if (password && password_confirmation) {
+        if (password !== password_confirmation) {
+          res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
+        }
+        const userLogin = await Registration2.findOne({_id:id})
+    console.log(userLogin)
+      if ( userLogin) {
+        //  console.log(userLogin._id)
+        // console.log(req.user._id)
+
+        // const isMatch = await bcrypt.compare(Oldpassword,userLogin.password)
+        // if (isMatch) {
+          const salt = await bcrypt.genSalt(10)
+          const newHashPassword = await bcrypt.hash(password, salt)
+          await Registration2.findByIdAndUpdate(id, { $set: { password: newHashPassword } })
+          res.send({ "status": "success", "message": "Password changed succesfully" })
+        }
+      // }
+        
+     else {
+      res.send({ "status": "failed", "message": "All Fields are Required" })
+    }
+  }  }
+  catch (error) {
+   console.log(error)
+   return res.status(422).json({error:"not found data"})
+ }
+ }
+
+
+
+
+
+  static editProfile = async (req, res) => {
+
+    try {
+      const { phonenumber, email ,name} = req.body
+    
+      // if (password && password_confirmation) {
+      //   if (password !== password_confirmation) {
+      //     res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
+      //   }
+        const userLogin = await Registration2.findOne({_id:req.user._id})
+    // console.log(userLogin)
+
+      if ( userLogin) {
+          await Registration2.findByIdAndUpdate(req.user._id, { $set: {name:name, phonenumber:phonenumber ,email:email}})
+          res.send({ "status": "success", "message": "Profile changed succesfully" })
+        }
+     else {
+      res.send({ "status": "failed", "message": "All Fields are Required" })
+    }
+  }  
+  catch (error) {
+   console.log(error)
+   return res.status(422).json({error:"not found data"})
+ }
+ }  
 
   
 
