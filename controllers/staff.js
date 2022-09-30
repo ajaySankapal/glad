@@ -1,11 +1,15 @@
 // import registration from '../Schema/Registration.js'
-import Product from '../Schema/Products.js'
-import Invoice from '../Schema/costumersInvoice.js'
-import StoreInvoice from '../Schema/storeInvoice.js'
-import Registration2 from '../Schema/Registration2.js'
-import Expances from "../Schema/expances.js"
+import Product from '../Schema/Products.js';
+import Invoice from '../Schema/costumersInvoice.js';
+import StoreInvoice from '../Schema/storeInvoice.js';
+import Registration2 from '../Schema/Registration2.js';
+import Expances from "../Schema/expances.js";
 import Category from "../Schema/Category.js";
 import Location from "../Schema/Location.js";
+import Miscellaneous from '../Schema/Miscellaneous.js';
+import Deposite from '../Schema/deposite.js';
+
+
 // process.env.SECRET_KEY
 // import  bcrypt from "bcryptjs";
 
@@ -238,6 +242,38 @@ let lol = {...req.body,createdby:  req.user._id,addAttachment}
     console.log(expances)
     
   };
+  
+
+  static addDeposite = async (req, res) => {
+    const addAttachment = req.files['addAttachment'][0].filename
+let lol = {...req.body,createdby:req.user._id,addAttachment}
+    const deposite = new Deposite(lol)
+    try {
+      await deposite.save()
+      res.status(201).send(deposite)
+    } catch (err) {
+      res.status(400).send(err)
+    }
+    console.log(deposite)
+    
+  };
+
+
+  static addmiscellaneous = async (req, res) => {
+    const addAttachment = req.files['addAttachment'][0].filename
+let lol = {...req.body,createdby:req.user._id,addAttachment}
+    const miscellaneous = new Miscellaneous(lol)
+    try {
+      await miscellaneous.save()
+      res.status(201).send(miscellaneous)
+    } catch (err) {
+      res.status(400).send(err)
+    }
+    console.log(miscellaneous)
+    
+  };
+
+
 
   static getLocation = async (req, res) => {
     const locations = await Location.find({})

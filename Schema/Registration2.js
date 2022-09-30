@@ -80,7 +80,6 @@ rgisterSchema.pre('save',async function (next){
 })
 
 const Registration2 = mongoose.model('Registration2', rgisterSchema)
-
 export default Registration2;
 
 // import mongoose from "mongoose"

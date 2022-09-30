@@ -6,8 +6,9 @@ import Location from "../Schema/Location.js";
 import Registration2 from "../Schema/Registration2.js";
 import Invoice from '../Schema/costumersInvoice.js'
 import mongoose from 'mongoose';
-import Category from "../Schema/Category.js"
-// import Invoice from '../Schema/costumersInvoice.js'
+import Category from "../Schema/Category.js";
+import Miscellaneous from '../Schema/Miscellaneous.js';
+import Deposite from '../Schema/deposite.js';
 
 // process.env.SECRET_KEY
  import  bcrypt from "bcryptjs";
@@ -34,8 +35,7 @@ class userController{
         console.log(userLogin)
         res.status(201).send({message:"number already register",})
       }
-    }
-    
+    }   
 else
 {const lol = {phonenumber,name,email,role,pimage,password}
 const register = new  Registration2(lol)
@@ -81,14 +81,52 @@ catch (error) {
 static RecentaddedProduct= async(req, res) => {
 
   try {
+     const ram =  await Product.find({
+ "createdAt":{$lt: new Date(), $gt:new Date(new Date().getTime()-(24*60*60*1000))}
+  })
+if (ram) {
+     res.send(ram)}
+} 
+  catch (error) {
+    console.log(error,{message:"items not added"})
+}}
+
+
+
+
+static dailyaddedMiscellaneous= async(req, res) => {
+
+  try {
      
-  const ram =  await Product.find({
+  const ram =  await Miscellaneous.find({
 
     "createdAt":{$lt: new Date(), $gt:new Date(new Date().getTime()-(24*60*60*1000))}
   })
 
   if (ram) {
+   res.send(ram)}
     
+  } 
+  catch (error) {
+    console.log(error,{message:"items not added"})
+  }
+
+}
+
+
+static GetdailycostumersInvoice= async(req, res) => {
+
+  try {
+     
+  const ram =  await Invoice.find({
+// to get last 24 hour sells record
+    "createdAt":{$lt: new Date(), $gt:new Date(new Date().getTime()-(24*60*60*1000))}
+  })
+
+  if (ram) {
+    //  console.log(ram)
+//  console.log(new Date(new Date().getTime()-(24*60*1000)))
+//  console.log(new Date(new Date().getTime()-(24*60*60*1000)))
  
   res.send(ram)
 
@@ -102,7 +140,10 @@ static RecentaddedProduct= async(req, res) => {
 
 }
 
-static GetdailyDetails= async(req, res) => {
+
+
+
+static GetdailyMiscellaneous= async(req, res) => {
 
   try {
      
@@ -163,6 +204,12 @@ static GetdailyDetails= async(req, res) => {
     // res.send(req.body)
   }
 
+  static getProductByid = async (req, res) => {
+  const {_id} = req.params
+    const product = await Product.find({_id})
+    res.json(product)
+  }
+
  static getLocation = async (req, res) => {
     const locations = await Location.find({})
     res.json(locations)
@@ -175,20 +222,31 @@ static GetdailyDetails= async(req, res) => {
     const invoice = await Invoice.find({})
     res.json(invoice)
   }
+  static Deposite = async (req, res) => {
+    const deposite = await Deposite.find({})
+    res.json(deposite)
+  }
 
+  static getStaff = async (req, res) => {
+try {
+ const Staff = await Registration2.find()
+
+  const staff =  Staff.filter((element)=>{
+      return (element.role = 'staff' )
+    })
+    res.send(staff)
+
+} catch (error) {
+  console.log(error)
+} }
+  
   
   static changeUserPassword = async (req, res) => {
 
     try {
       // const { password, password_confirmation,Oldpassword } = req.body
       const { password, password_confirmation,id } = req.body
-      // const { id } = req.params;
-      //  console.log(id)
-// var id = req.params.id
-      // let li ='633520bd0252b9afa1479feb'
     
-      //  const id = mongoose.Types.ObjectId(_id);
-      //  console.log(id)
       if (password && password_confirmation) {
         if (password !== password_confirmation) {
           res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
@@ -196,11 +254,7 @@ static GetdailyDetails= async(req, res) => {
         const userLogin = await Registration2.findOne({_id:id})
     console.log(userLogin)
       if ( userLogin) {
-        //  console.log(userLogin._id)
-        // console.log(req.user._id)
-
-        // const isMatch = await bcrypt.compare(Oldpassword,userLogin.password)
-        // if (isMatch) {
+       
           const salt = await bcrypt.genSalt(10)
           const newHashPassword = await bcrypt.hash(password, salt)
           await Registration2.findByIdAndUpdate(id, { $set: { password: newHashPassword } })
@@ -227,26 +281,44 @@ static GetdailyDetails= async(req, res) => {
     try {
       const { phonenumber, email ,name} = req.body
     
-      // if (password && password_confirmation) {
-      //   if (password !== password_confirmation) {
-      //     res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
-      //   }
         const userLogin = await Registration2.findOne({_id:req.user._id})
-    // console.log(userLogin)
-
+    
       if ( userLogin) {
           await Registration2.findByIdAndUpdate(req.user._id, { $set: {name:name, phonenumber:phonenumber ,email:email}})
           res.send({ "status": "success", "message": "Profile changed succesfully" })
         }
      else {
       res.send({ "status": "failed", "message": "All Fields are Required" })
-    }
-  }  
+    }}  
   catch (error) {
    console.log(error)
    return res.status(422).json({error:"not found data"})
  }
  }  
+
+ 
+
+ static editProfilePic = async (req, res) => {
+
+  try {
+    // const { phonenumber, email ,name} = req.body
+    const pimage = req.files['pimage'][0].filename
+      const userLogin = await Registration2.findOne({_id:req.user._id})
+  
+    if ( userLogin) {
+        await Registration2.findByIdAndUpdate(req.user._id, { $set: {pimage:pimage}})
+        res.send({ "status": "success", "message": "ProfilePic changed succesfully" })
+      }
+   else {
+    res.send({ "status": "failed", "message": "All Fields are Required" })
+  }}  
+catch (error) {
+ console.log(error)
+ return res.status(422).json({error:"not found data"})
+}
+}  
+
+
 
   
 

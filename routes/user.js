@@ -10,8 +10,8 @@ import authenticate from "../middleware/authenticate.js";
 const router = express.Router();
 //authentication
 router.use( '/register',upload.fields([{name:'pimage',maxcount:1}]));
-// router.use( '/registers',upload.fields([{name:'pimage',maxcount:1}]));
-
+ router.use( '/editProfilePic',upload.fields([{name:'pimage',maxcount:1}]));
+ 
 //post request
  router.post ('/register', userController.register);
  router.post ('/login',userController.login);
@@ -29,11 +29,16 @@ router.use( '/register',upload.fields([{name:'pimage',maxcount:1}]));
 // router.get ('/getLocation',userController.getLocation);
 
 router.get ('/costumersInvoice', userController.costumersInvoice);
-router.get ('/GetdailyDetails',authenticate, middile.admin, userController.GetdailyDetails);
+router.get ('/GetdailycostumersInvoice',authenticate, middile.admin, userController.GetdailycostumersInvoice);
 router.get ('/RecentaddedProduct',authenticate, middile.admin, userController.RecentaddedProduct);
+router.get ('/dailyaddedMiscellaneous',authenticate, middile.admin, userController.dailyaddedMiscellaneous);
+router.get ('/Deposite',authenticate, middile.admin, userController.Deposite);
+router.get ('/getStaff', userController.getStaff);
+router.get ('/getProductByid/:_id',authenticate, middile.admin, userController.getProductByid);
+
 
 //patch request
 router.patch ('/editProfile',authenticate, userController.editProfile);
 router.patch('/changeUserPassword',authenticate,middile.admin,userController.changeUserPassword);
-
+router.patch ('/editProfilePic',authenticate, userController.editProfilePic);
  export default router;
