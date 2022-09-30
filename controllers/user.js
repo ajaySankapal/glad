@@ -49,35 +49,6 @@ catch (error) {
   }
 
   
-//   static registers = async(req, res) => {
-
-//     try {
-//        const {phonenumber,name,email,role,password} = req.body;
-     
-//     const pimage = req.files['pimage'][0].filename
-//     const userLogin = await Registration2.findOne({ phonenumber: phonenumber });
-//     console.log(userLogin)
-//     if (userLogin) {
-//       if (userLogin.phonenumber == phonenumber) {
-//         console.log(userLogin)
-//         res.status(201).send({message:"number already register",})
-//       }
-//     }
-    
-// else
-// {const lol = {phonenumber,name,email,role,pimage,password}
-// const register = new  Registration2(lol)
-//   await register.save()
-// res.status(201).send({message:"succesfull",})
-// }}
-//  catch (error) {
-//     console.log(error)
-//     return res.status(422).json({error:"not found data"})
-//   }
-//   }
-
-
-
 static RecentaddedProduct= async(req, res) => {
 
   try {
@@ -214,8 +185,7 @@ static GetReport= async(req, res) => {
       res.status(400).send(e)
     }
     console.log(req.body)
-    // res.send(req.body)
-  }
+   }
 
   static getProductByid = async (req, res) => {
   const {_id} = req.params
@@ -236,12 +206,10 @@ static GetReport= async(req, res) => {
   static getStaff = async (req, res) => {
 try {
  const Staff = await Registration2.find()
-
-  const staff =  Staff.filter((element)=>{
+ const staff =  Staff.filter((element)=>{
       return (element.role = 'staff' )
     })
     res.send(staff)
-
 } catch (error) {
   console.log(error)
 } }
@@ -307,7 +275,7 @@ try {
  static editProfilePic = async (req, res) => {
 
   try {
-    // const { phonenumber, email ,name} = req.body
+  
     const pimage = req.files['pimage'][0].filename
       const userLogin = await Registration2.findOne({_id:req.user._id})
   
@@ -316,7 +284,7 @@ try {
         res.send({ "status": "success", "message": "ProfilePic changed succesfully" })
       }
    else {
-    res.send({ "status": "failed", "message": "All Fields are Required" })
+    res.send({ "status": "failed", "message": " select pic" })
   }}  
 catch (error) {
  console.log(error)
@@ -350,7 +318,7 @@ catch (error) {
         //     expires:new Date(Date.now() + 2589000000),
         //    httpOnly:true});
 
-        !isMatch ? res.status(400).send({ message: "error" }) : res.send({ "status": "success", "message": "Login Success", "token": token })
+        !isMatch ? res.status(400).send({ message: "error" }) : res.send({ "status": "success", "message": "Login Success", "token": token,})
 
       }
       else { res.status(400).send({ message: "filled invalid data" }) }
@@ -361,43 +329,21 @@ catch (error) {
   };
 
 
-  // static login = async (req, res) => {
-  //   const { phonenumber } = req.body
-  //   const newPhoneNumber = "+91" + phonenumber
-  //   var params = {
-  //     template: 'Your Login OTP is %token',
-  //     timeout: 300
-  //   };
-
-  //   messagebird.verify.create(newPhoneNumber, params,
+  // static verifyOTP = async (req, res) => {
+  //   const { id, otpcode } = req.body
+  //   messagebird.verify.verify(id, otpcode,
   //     (err, response) => {
   //       if (err) {
-  //         // Could not send OTP e.g. Phone number Invalid
-  //         console.log("OTP Send Error:", err);
-  //         res.status(200).send({ "status": "failed", "message": "Unable to Send OTP" })
+  //         // Incorrect OTP
+  //         console.log("OTP Verification Error:", err)
+  //         res.status(200).send({ "status": "failed", "message": "Invalid OTP" })
   //       } else {
-  //         // OTP Send Success
-  //         console.log("OTP Send Response:", response);
-  //         res.status(200).send({ "status": "success", "message": "OTP Send Successfully", "id": response.id })
+  //         // Login Success
+  //         console.log("OTP Verification Response:", response)
+  //         res.status(200).send({ "status": "success", "message": "Login Success" })
   //       }
   //     });
   // }
-
-  static verifyOTP = async (req, res) => {
-    const { id, otpcode } = req.body
-    messagebird.verify.verify(id, otpcode,
-      (err, response) => {
-        if (err) {
-          // Incorrect OTP
-          console.log("OTP Verification Error:", err)
-          res.status(200).send({ "status": "failed", "message": "Invalid OTP" })
-        } else {
-          // Login Success
-          console.log("OTP Verification Response:", response)
-          res.status(200).send({ "status": "success", "message": "Login Success" })
-        }
-      });
-  }
 
 
 }
