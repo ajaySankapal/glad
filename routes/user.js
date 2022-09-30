@@ -19,11 +19,8 @@ router.use( '/register',upload.fields([{name:'pimage',maxcount:1}]));
  router.post ('/addLoaction',userController.addLoaction);
  router.post ('/addCategory',userController.addCategory);
  
-//  router.post ('/registers', userController.registers);
- 
 
-// router.post('/login', UserController.userLogin)
- router.post('/verify', userController.verifyOTP)
+//  router.post('/verify', userController.verifyOTP)
 
 //get request
 // router.get ('/getLocation',userController.getLocation);
@@ -35,6 +32,7 @@ router.get ('/dailyaddedMiscellaneous',authenticate, middile.admin, userControll
 router.get ('/Deposite',authenticate, middile.admin, userController.Deposite);
 router.get ('/getStaff', userController.getStaff);
 router.get ('/getProductByid/:_id',authenticate, middile.admin, userController.getProductByid);
+router.post ('/GetReport',authenticate, middile.admin, userController.GetReport);
 
 
 //patch request

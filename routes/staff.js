@@ -38,9 +38,7 @@ router.post('/addExpances',authenticate ,middile.staff,  staffController.addExpa
  router.post('/addmiscellaneous',authenticate ,middile.staff,  staffController.addmiscellaneous)
  router.post('/addDeposite',authenticate ,middile.staff,  staffController.addDeposite)
  
-//  router.post ('/login',userController.login);
-//  router.post ('/addProduct',userController.addProduct);
-//  router.post ('/addLoaction',userController.addLoaction);
+
 
 // router.post('/login', UserController.userLogin)
 //  router.post('/verify', userController.verifyOTP)

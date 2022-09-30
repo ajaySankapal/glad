@@ -117,28 +117,14 @@ static dailyaddedMiscellaneous= async(req, res) => {
 static GetdailycostumersInvoice= async(req, res) => {
 
   try {
-     
-  const ram =  await Invoice.find({
-// to get last 24 hour sells record
-    "createdAt":{$lt: new Date(), $gt:new Date(new Date().getTime()-(24*60*60*1000))}
+     const ram =  await Invoice.find({
+"createdAt":{$lt: new Date(), $gt:new Date(new Date().getTime()-(24*60*60*1000))}
   })
-
-  if (ram) {
-    //  console.log(ram)
-//  console.log(new Date(new Date().getTime()-(24*60*1000)))
-//  console.log(new Date(new Date().getTime()-(24*60*60*1000)))
- 
-  res.send(ram)
-
-  
-  }
-    
-  } 
+ if (ram) {
+    res.send(ram)} 
+} 
   catch (error) {
-    console.log(error,{message:"items not added"})
-  }
-
-}
+    console.log(error,{message:"items not added"})}}
 
 
 
@@ -153,21 +139,48 @@ static GetdailyMiscellaneous= async(req, res) => {
   })
 
   if (ram) {
-    //  console.log(ram)
+    //  console.log(ram) 
 //  console.log(new Date(new Date().getTime()-(24*60*1000)))
 //  console.log(new Date(new Date().getTime()-(24*60*60*1000)))
  
-  res.send(ram)
-
-  
-  }
-    
+  res.send(ram)}
   } 
   catch (error) {
     console.log(error,{message:"items not added"})
   }
 
 }
+
+static GetReport= async(req, res) => {
+
+  try {
+ const {startdate,enddate} = req.body
+//  console.log(req.body,"158")
+
+// const  startdate ='2022-09-29'
+// const  enddate ='2022-09-31'
+    // "startdate": { "type":"string", "format": "date", "required":true },
+// db.test.find({
+//   startTime: {
+//       $gte: '2015-11-03 00:00:00',
+//       $lt:  '2015-11-04 00:00:00'
+//   }
+// }).pretty()
+
+// var timestamp = moment().format("YYYY-MM-DDThh:mm:ss.SSSZ");
+// pm.environment.set("timestamp", timestamp);
+     const ram =  await Invoice.find({
+"createdAt":{ $gte: startdate,  $lt: enddate }
+  })
+ if (ram) {
+    res.send(ram)} 
+} 
+  catch (error) {
+    console.log(error,{message:"items not added"})}}
+
+
+
+
 
 
 
@@ -210,14 +223,7 @@ static GetdailyMiscellaneous= async(req, res) => {
     res.json(product)
   }
 
- static getLocation = async (req, res) => {
-    const locations = await Location.find({})
-    res.json(locations)
-  }
-  // static getcategory = async (req, res) => {
-  //   const category = await Category.find({})
-  //   res.json(category)
-  // }
+  
   static costumersInvoice = async (req, res) => {
     const invoice = await Invoice.find({})
     res.json(invoice)
