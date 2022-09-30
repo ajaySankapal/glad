@@ -4,7 +4,8 @@ import Invoice from '../Schema/costumersInvoice.js'
 import StoreInvoice from '../Schema/storeInvoice.js'
 import Registration2 from '../Schema/Registration2.js'
 import Expances from "../Schema/expances.js"
-import Category from "../Schema/Category.js"
+import Category from "../Schema/Category.js";
+import Location from "../Schema/Location.js";
 // process.env.SECRET_KEY
 // import  bcrypt from "bcryptjs";
 
