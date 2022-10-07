@@ -8,6 +8,11 @@ const rgisterSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    
+    memberId: {
+      type: String,
+      required: true,
+    },
 
     name: {
       type: String,
@@ -18,7 +23,16 @@ const rgisterSchema = new mongoose.Schema(
       required: true,
     },
     password: { type: String },
-    pimage: { type: String },
+     pimage: { type: String },
+
+     
+
+     pimage: {
+      type: String,
+      enum: ['pimage', 'null', ],
+       default: "null",
+    },
+     //       // default: "user",
     role: {
       type: String,
       enum: ['staff', 'admin', 'seller'],
@@ -58,7 +72,7 @@ const rgisterSchema = new mongoose.Schema(
     //   },
     // ],
 
-    pimage:{type:String,required:true},
+    // pimage:{type:String,required:true},
     role: {
         type: String,
          enum: ["user", "admin","staff"],

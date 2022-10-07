@@ -25,9 +25,9 @@ class userController{
   static register = async(req, res) => {
 
     try {
-       const {phonenumber,name,email,role,password} = req.body;
+       const {phonenumber,name,email,role,password,memberId} = req.body;
      
-    const pimage = req.files['pimage'][0].filename
+    // const pimage = req.files['pimage'][0].filename
     const userLogin = await Registration2.findOne({ phonenumber: phonenumber });
     console.log(userLogin)
     if (userLogin) {
@@ -37,7 +37,7 @@ class userController{
       }
     }   
 else
-{const lol = {phonenumber,name,email,role,pimage,password}
+{const lol = {phonenumber,name,email,role,password,memberId}
 const register = new  Registration2(lol)
   await register.save()
 res.status(201).send({message:"succesfull",})
