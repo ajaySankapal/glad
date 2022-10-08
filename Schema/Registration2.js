@@ -39,45 +39,6 @@ const rgisterSchema = new mongoose.Schema(
       // default: "user",
     },
 
-    // miscellaneous: [
-    //   {
-    //     //name,aadhar,enter bill number,select product,quantity,cash,credit,totalAmount
-    //     personName: {
-    //       type: String,
-    //       required: true,
-    //       trim: true,
-    //     },
-    //     mobile: { type: Number, required: true },
-
-    //     invoiceDetails: {
-    //       type: String,
-    //       enum: ['In', 'Out'],
-    //       // default: "user",
-    //     },
-
-    //     billNumber: {
-    //       type: String,
-    //       unique: true,
-          
-    //     },
-
-    //     totalAmount: {
-    //       type: Number,
-    //       required: true,
-    //     },
-    //     enterDescription: { type: String, required: true },
-    //     addAttachment: { type: String },
-
-    //     createdAt: { type: Date, default: Date.now },
-    //   },
-    // ],
-
-    // pimage:{type:String,required:true},
-    role: {
-        type: String,
-         enum: ["user", "admin","staff"],
-        default: "user",
-      },
   },
   {
     timestamps: true,
